@@ -20,7 +20,7 @@
 
 <body>
     <h1 style="font-size: 1.5em;">Hello World for PWA</h1>
-    Loading...
+    <button id="btn-scan">scan</button>
     <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.20/dist/dbr.js"></script>
     <script>
         if(location.protocol === "file:") {
@@ -43,9 +43,10 @@
          * LICENSE ALERT - THE END 
          */
 
+        let scanner;
         (async function() {
             try {
-                const scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+                scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
                 /** 
                  * 'onFrameRead' is triggered after the library finishes reading a frame image.
                  * There can be multiple barcodes on one image.
@@ -77,6 +78,10 @@
                 alert(errMsg);
             }
         })();
+        
+        document.getElementById('btn-scan').addEventListner('click',()=>{
+          scanner.show();
+        });
         
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js');
